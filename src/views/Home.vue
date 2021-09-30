@@ -111,11 +111,16 @@
         />
       </div>
       <div class="col-xs-12 text-center q-my-md">
-        <q-btn class="font-weight-bolder" label="Shop More" color="primary" />
+        <q-btn
+          to="/shop/products"
+          class="font-weight-bolder"
+          label="Shop More"
+          color="primary"
+        />
       </div>
     </div>
     <div class="row max-width brands">
-      <BrandSlider :brands="brands" />
+      <BrandSlider :brandList="brands" />
     </div>
   </div>
 </template>
@@ -123,7 +128,7 @@
 <script>
 import { ref } from 'vue';
 import CardComponent from '../components/General/Card.vue';
-import BrandSlider from '../components/General/BrandSlider.vue';
+import BrandSlider from '../components/Layout/BrandSlider.vue';
 export default {
   name: 'Home',
   components: {

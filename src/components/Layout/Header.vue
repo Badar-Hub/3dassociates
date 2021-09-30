@@ -21,11 +21,18 @@
         </router-link>
       </div>
       <div :class="!$q.screen.gt.xs ? 'hidden' : ''" class="col-sm-7 q-my-auto">
-        <q-input label="Search..." rounded outlined class="full-width">
+        <q-input
+          @keypress.enter="submit"
+          v-model="searched"
+          label="Search..."
+          rounded
+          outlined
+          class="full-width"
+        >
           <template v-slot:append>
             <div class="search-icon">
               <q-icon
-                @keypress.enter="submit"
+                @click="submit"
                 class="q-pr-sm cursor-pointer"
                 name="search"
               />
@@ -43,8 +50,8 @@
           <h6 class="q-my-sm">Deals</h6>
         </router-link>
         <h6 class="q-my-auto">|</h6>
-        <router-link to="/brands">
-          <h6 class="q-my-sm">Brands</h6>
+        <router-link to="/about">
+          <h6 class="q-my-sm">About Us</h6>
         </router-link>
         <h6 class="q-my-auto">|</h6>
         <router-link to="/shop/products">
@@ -64,17 +71,95 @@
         </router-link>
       </div>
     </div>
+    <ModalComonent
+      @close="resetModal"
+      v-model="isSearchModal"
+      :title="`You Have Searched For ${searched}`"
+      width="100%"
+    >
+      <div v-if="filteredProducts.length > 0" class="product-modal">
+        <div
+          class="prod q-pa-sm q-mx-auto"
+          v-for="(product, index) in filteredProducts"
+          :key="index"
+        >
+          <router-link to="/">
+            <q-card>
+              <div class="row full-width">
+                <div class="col-xs-12">
+                  <img
+                    class="prod-image"
+                    :src="require(`@/${product.image}`)"
+                  />
+                </div>
+                <hr class="fit" />
+                <div class="col-xs-12">
+                  <h6 class="q-my-xs">{{ product.name }}</h6>
+                </div>
+                <div class="col-xs-12">
+                  <p class="text-body1 q-my-xs">Rs.{{ product.price }}</p>
+                </div>
+              </div>
+            </q-card>
+          </router-link>
+        </div>
+      </div>
+      <div v-else>
+        <h6>0 results for {{ searched }}</h6>
+      </div>
+    </ModalComonent>
   </div>
 </template>
 
 <script>
+import { onMounted, ref, watch } from 'vue';
+import ModalComonent from '../Layout/Modal.vue';
+import ProductList from '../../assets/js/products';
 export default {
+  components: {
+    ModalComonent,
+  },
   setup() {
-    const submit = () => {
-      console.log('Hello World');
+    const searched = ref('');
+    const isSearchModal = ref(false);
+    const filteredProducts = ref([]);
+    const products = ref(ProductList.products);
+
+    const resetModal = () => {
+      isSearchModal.value = false;
+      searched.value = '';
     };
+
+    const searchedProducts = () => {
+      if (searched.value === '') {
+        isSearchModal.value = false;
+      } else {
+        isSearchModal.value = true;
+        filteredProducts.value = products.value.filter((product) =>
+          product.name.toUpperCase().includes(searched.value.toUpperCase())
+        );
+      }
+    };
+
+    watch(
+      () => searched.value.length > 1,
+      () => searchedProducts()
+    );
+
+    const submit = () => {
+      searchedProducts();
+    };
+
+    onMounted(() => {
+      console.log(products.value);
+    });
     return {
       submit,
+      searched,
+      resetModal,
+      isSearchModal,
+      searchedProducts,
+      filteredProducts,
     };
   },
 };
@@ -111,6 +196,22 @@ export default {
     color: white;
     text-decoration: none;
     padding-right: 5px;
+  }
+}
+.product-modal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  .prod {
+    max-width: 250px;
+    width: 100%;
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+  .prod-image {
+    max-width: 230px;
+    width: 100%;
   }
 }
 </style>

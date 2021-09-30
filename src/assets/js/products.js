@@ -2,10 +2,33 @@ const data = {
   products: [
     {
       sku: 'WI00440',
+      name: 'ABC',
+      image: 'assets/images/WI00440.jpg',
+      brands: 'Signature',
+      price: '85',
+      category: '',
+      bestSelling: true,
+      fearured: true,
+    },
+    {
+      sku: 'WI00440',
+      name: 'XYZ',
+      image: 'assets/images/WI00440.jpg',
+      brands: 'Signature',
+      price: '85',
+      category: '',
+      bestSelling: true,
+      fearured: true,
+    },
+    {
+      sku: 'WI00440',
       name: 'Signature Ball Pen Blu Blue (Dabi)',
       image: 'assets/images/WI00440.jpg',
       brands: 'Signature',
       price: '85',
+      category: '',
+      bestSelling: true,
+      fearured: true,
     },
     {
       sku: 'WI00439',
@@ -13,6 +36,9 @@ const data = {
       image: 'assets/images/WI00439.jpg',
       brands: 'Signature',
       price: '85',
+      category: '',
+      bestSelling: false,
+      fearured: true,
     },
     {
       sku: 'WI00441',
@@ -20,6 +46,8 @@ const data = {
       image: 'assets/images/WI00441.jpg',
       brands: 'Signature',
       price: '85',
+      category: '',
+      bestSelling: false,
     },
     {
       sku: 'WI00442',
@@ -27,6 +55,9 @@ const data = {
       image: 'assets/images/WI00442.jpg',
       brands: 'Signature',
       price: '85',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01073',
@@ -34,6 +65,9 @@ const data = {
       image: 'assets/images/sablon/FA01073.jpg',
       brands: 'Sablon',
       price: '375',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01074',
@@ -41,6 +75,9 @@ const data = {
       image: 'assets/images/sablon/FA01074.jpg',
       brands: 'Sablon',
       price: '375',
+      category: '',
+      bestSelling: false,
+      fearured: true,
     },
     {
       sku: 'FA01076',
@@ -48,6 +85,9 @@ const data = {
       image: 'assets/images/sablon/FA01076.jpg',
       brands: 'Sablon',
       price: '375',
+      category: '',
+      bestSelling: true,
+      fearured: false,
     },
     {
       sku: 'FA01075',
@@ -55,6 +95,9 @@ const data = {
       image: 'assets/images/sablon/FA01075.jpg',
       brands: 'Sablon',
       price: '385',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01078',
@@ -62,6 +105,9 @@ const data = {
       image: 'assets/images/sablon/FA01078.jpg',
       brands: 'Sablon',
       price: '510',
+      category: '',
+      bestSelling: false,
+      fearured: true,
     },
     {
       sku: 'FA01084',
@@ -69,6 +115,9 @@ const data = {
       image: 'assets/images/sablon/FA01084.jpg',
       brands: 'Sablon',
       price: '950',
+      category: '',
+      bestSelling: true,
+      fearured: false,
     },
     {
       sku: 'FA01077',
@@ -76,6 +125,9 @@ const data = {
       image: 'assets/images/sablon/FA01077.jpg',
       brands: 'Sablon',
       price: '950',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01082',
@@ -83,6 +135,9 @@ const data = {
       image: 'assets/images/sablon/FA01082.jpg',
       brands: 'Sablon',
       price: '790',
+      category: '',
+      bestSelling: false,
+      fearured: true,
     },
     {
       sku: 'FA01079',
@@ -90,6 +145,9 @@ const data = {
       image: 'assets/images/sablon/FA01079.jpg',
       brands: 'Sablon',
       price: '535',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01081',
@@ -97,6 +155,9 @@ const data = {
       image: 'assets/images/sablon/FA01081.jpg',
       brands: 'Sablon',
       price: '630',
+      category: '',
+      bestSelling: true,
+      fearured: false,
     },
     {
       sku: 'FA01080',
@@ -104,6 +165,9 @@ const data = {
       image: 'assets/images/sablon/FA01080.jpg',
       brands: 'Sablon',
       price: '600',
+      category: '',
+      bestSelling: false,
+      fearured: false,
     },
     {
       sku: 'FA01086',
@@ -111,6 +175,9 @@ const data = {
       image: 'assets/images/sablon/FA01086.jpg',
       brands: 'Sablon',
       price: '1120',
+      category: '',
+      bestSelling: false,
+      fearured: true,
     },
     {
       sku: 'FA01083',
@@ -118,6 +185,9 @@ const data = {
       image: 'assets/images/sablon/FA01083.jpg',
       brands: 'Sablon',
       price: '755',
+      category: '',
+      bestSelling: true,
+      fearured: false,
     },
     {
       sku: 'FA01085',
@@ -125,6 +195,9 @@ const data = {
       image: 'assets/images/sablon/FA01085.jpg',
       brands: 'Sablon',
       price: '755',
+      category: '',
+      bestSelling: true,
+      fearured: true,
     },
   ],
 };
