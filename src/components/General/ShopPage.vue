@@ -8,12 +8,6 @@
           </div>
           <hr />
           <div class="row full-width">
-            <router-link to="/shop/deals">
-              <h6 class="q-my-sm">Deals</h6>
-            </router-link>
-            <hr class="full-width" />
-          </div>
-          <div class="row full-width">
             <router-link to="/shop/back-to-school">
               <h6 class="q-my-sm">Back To School</h6>
             </router-link>
@@ -24,11 +18,6 @@
               <h6 class="q-my-sm">Office Supplies</h6>
             </router-link>
             <hr class="full-width" />
-          </div>
-          <div class="row full-width">
-            <router-link to="/shop/packing">
-              <h6 class="q-my-sm">Packing</h6>
-            </router-link>
           </div>
         </q-card>
       </div>

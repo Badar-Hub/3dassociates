@@ -4,10 +4,10 @@
       <div class="row max-width">
         <div class="row col-xs-12 col-sm-6">
           <q-icon class="q-my-auto q-px-sm" name="phone" size="sm" />
-          <p class="q-my-auto q-mr-sm">03111222295</p>
+          <p class="q-my-auto q-mr-sm">+92 320 5500638</p>
           <p class="q-mx-sm q-my-auto">|</p>
           <q-icon class="q-my-auto q-px-sm" name="mail" size="sm" />
-          <p class="q-my-auto">3dassociates@gmail.com</p>
+          <p class="q-my-auto">orders@3dassociates.pk</p>
         </div>
         <div class="col-xs-12 col-sm-6 text-right q-my-auto">
           <img class="country-flag" src="@/assets/conutry-flag.png" />
@@ -46,10 +46,6 @@
     </div>
     <div class="nav">
       <div class="row justify-center max-width">
-        <router-link to="/deals">
-          <h6 class="q-my-sm">Deals</h6>
-        </router-link>
-        <h6 class="q-my-auto">|</h6>
         <router-link to="/about">
           <h6 class="q-my-sm">About Us</h6>
         </router-link>
@@ -64,10 +60,6 @@
         <h6 class="q-my-auto">|</h6>
         <router-link to="/office-supplies">
           <h6 class="q-my-sm">Office Supplies</h6>
-        </router-link>
-        <h6 class="q-my-auto">|</h6>
-        <router-link to="/packing">
-          <h6 class="q-my-sm">Packing</h6>
         </router-link>
       </div>
     </div>
