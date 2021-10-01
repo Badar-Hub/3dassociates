@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import axios from 'axios';
+import { ref, defineComponent, onMounted } from 'vue';
 import HeaderComponent from './components/Layout/Header.vue';
 import FooterComponent from './components/Layout/Footer.vue';
 
@@ -15,6 +16,19 @@ export default defineComponent({
   components: {
     HeaderComponent,
     FooterComponent,
+  },
+  setup() {
+    const products = ref([]);
+
+    onMounted(async () => {
+      try {
+        products.value = axios.get(
+          'https://shop.3dassociates.pk/wp-json/wc/store/products'
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    });
   },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card class="my-card" flat bordered>
-      <img class="card-image" :src="require(`@/${img}`)" />
+      <img class="card-image" :src="externalImage ? img : require(`@/${img}`)" />
 
       <q-card-section>
         <div class="text-h6 font-weight-bold q-mt-sm q-mb-xs">{{ title }}</div>
@@ -20,6 +20,10 @@ export default {
   props: {
     img: {
       type: String,
+    },
+    externalImage: {
+      type: Boolean,
+      default: () => false
     },
     title: {
       type: String,
