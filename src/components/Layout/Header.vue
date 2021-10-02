@@ -106,7 +106,7 @@
 <script>
 import { onMounted, ref, watch } from 'vue';
 import ModalComonent from '../Layout/Modal.vue';
-import ProductList from '../../assets/js/products';
+import axios from 'axios';
 export default {
   components: {
     ModalComonent,
@@ -115,7 +115,17 @@ export default {
     const searched = ref('');
     const isSearchModal = ref(false);
     const filteredProducts = ref([]);
-    const products = ref(ProductList.products);
+    const products = ref([]);
+
+    const getProducts = async () => {
+      try {
+        products.value = await await axios.get(
+          `https://shop.3dassociates.pk/wp-json/wc/store/products`
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     const resetModal = () => {
       isSearchModal.value = false;
@@ -123,6 +133,7 @@ export default {
     };
 
     const searchedProducts = () => {
+      getProducts();
       if (searched.value === '') {
         isSearchModal.value = false;
       } else {

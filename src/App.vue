@@ -23,8 +23,18 @@ export default defineComponent({
     onMounted(async () => {
       try {
         products.value = axios.get(
-          'https://shop.3dassociates.pk/wp-json/wc/store/products'
+          'https://shop.3dassociates.pk/wp-json/wc/v3'
         );
+        const data = await axios.get(
+          'https://shop.3dassociates.pk/wp-json/wc/v3/products/categories',
+          {
+            params: {
+              consumer_key: 'ck_eae55b428917649345f163ae70a490f4da5cd090',
+              consumer_secret: 'cs_48280fa37373391243dbaf5faae25ac799afaa28',
+            },
+          }
+        );
+        console.log(data);
       } catch (error) {
         console.log(error);
       }

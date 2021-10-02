@@ -1,7 +1,17 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered>
-      <img class="card-image" :src="externalImage ? img : require(`@/${img}`)" />
+    <q-card
+      :style="height ? `height: ${height}px;` : ''"
+      class="my-card"
+      flat
+      bordered
+    >
+      <div class="container-img">
+        <img
+          class="card-image"
+          :src="externalImage ? img : require(`@/${img}`)"
+        />
+      </div>
 
       <q-card-section>
         <div class="text-h6 font-weight-bold q-mt-sm q-mb-xs">{{ title }}</div>
@@ -18,12 +28,15 @@ import { ref } from 'vue';
 
 export default {
   props: {
+    height: {
+      type: Number,
+    },
     img: {
       type: String,
     },
     externalImage: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
     title: {
       type: String,
@@ -48,6 +61,16 @@ export default {
   width: 100%;
   max-width: 330px;
   overflow: hidden;
+  .container-img {
+    background-color: #fafafa;
+    max-width: 230px;
+    width: 100%;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .card-image {
     max-width: 330px;
     width: 100%;

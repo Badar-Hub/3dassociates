@@ -20,6 +20,11 @@ const routes = [
       heading: 'Products',
     },
   },
+  {
+    path: '/new-product',
+    name: 'Add New Product',
+    component: () => import('../views/AddNewProduct.vue'),
+  },
 ];
 
 const router = createRouter({

@@ -53,8 +53,15 @@
         </div>
         <div class="products full-width">
           <div v-for="(product, index) in u.data" :key="index">
-            <a :href="`https://shop.3dassociates.pk/product/${product.permalink.split('https://3dassociates.pk/product/')[1]}`">
+            <a
+              :href="
+                `https://shop.3dassociates.pk/product/${
+                  product.permalink.split('https://3dassociates.pk/product/')[1]
+                }`
+              "
+            >
               <CardComponent
+                :height="350"
                 :externalImage="true"
                 class="cursor-pointer"
                 :img="product.images[0].src"
@@ -68,7 +75,7 @@
           <h5 class="q-my-sm">Pagination</h5>
           <div class="row justify-center max-width">
             <q-btn
-            class="q-mx-xs q-my-sm"
+              class="q-mx-xs q-my-sm"
               v-for="(page, index) in 3"
               :key="index"
               size="sm"
@@ -81,16 +88,15 @@
     </div>
   </div>
   <div v-else>
-    <h1>Loading ...</h1>
+    <q-skeleton class="q-my-md" :height="`${$q.screen.height - 100}px`" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import CardComponent from '../General/Card.vue';
-// import products from '../../assets/js/products';
 export default {
   components: {
     CardComponent,
@@ -115,48 +121,42 @@ export default {
     const nextPage = async (index) => {
       try {
         isLoading.value = true;
-        u.value = await axios.get(`https://shop.3dassociates.pk/wp-json/wc/store/products?page=${index + 1}`);
+        u.value = await axios.get(
+          `https://shop.3dassociates.pk/wp-json/wc/store/products?page=${index +
+            1}`
+        );
         isLoading.value = false;
       } catch (error) {
         console.log(error);
       }
     };
 
+    const sort = async () => {
+      await getProducts();
+      if (sortBy.value === 'Name: A to Z') {
+        u.value.data.sort((a, b) => {
+          const productA = a.name.toUpperCase();
+          const productB = b.name.toUpperCase();
+          if (productA < productB) {
+            return -1;
+          }
+        });
+      } else if (sortBy.value === 'Price: Low To High') {
+        u.value.data.sort((a, b) => a.prices.price - b.prices.price);
+      } else if (sortBy.value === 'Price: High To Low') {
+        u.value.products.sort((a, b) => b.prices.price - a.prices.price);
+      }
+    };
 
-    // const sort = async () => {
-    //   await getProducts();
-    //   if (sortBy.value === 'Name: A to Z') {
-    //     u.value.products.sort((a, b) => {
-    //       const productA = a.name.toUpperCase();
-    //       const productB = b.name.toUpperCase();
-    //       if (productA < productB) {
-    //         console.log(productA, productB);
-    //         return -1;
-    //       }
-    //     });
-    //   } else if (sortBy.value === 'Price: Low To High') {
-    //     u.value.products.sort((a, b) => a.price - b.price);
-    //   } else if (sortBy.value === 'Price: High To Low') {
-    //     u.value.products.sort((a, b) => b.price - a.price);
-    //   }
-    // };
-
-    // watch(
-    //   () => sortBy.value,
-    //   () => (u.value = products)
-    // );
-
-    // watch(
-    //   () => sortBy.value,
-    //   () => sort()
-    // );
+    watch(
+      () => sortBy.value,
+      () => sort()
+    );
 
     onMounted(async () => {
       try {
         isLoading.value = true;
         await getProducts();
-        const link = u.value.data
-        console.log(link, "Links");
         isLoading.value = false;
       } catch (error) {
         console.log(error);
