@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="products full-width">
-          <div v-for="(product, index) in u.data" :key="index">
+          <div v-for="(product, index) in u" :key="index">
             <a
               :href="
                 `https://shop.3dassociates.pk/product/${
@@ -66,7 +66,7 @@
                 class="cursor-pointer"
                 :img="product.images[0].src"
                 :title="product.name"
-                :shop="`Rs.${product.prices.price}`"
+                :shop="`Rs.${product.price}`"
               />
             </a>
           </div>
@@ -97,6 +97,7 @@ import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { ref, onMounted, watch } from 'vue';
 import CardComponent from '../General/Card.vue';
+import { ApiService } from '../../services/ApiService';
 export default {
   components: {
     CardComponent,
@@ -107,12 +108,21 @@ export default {
     const headingTitle = route.meta.heading;
     const sortBy = ref('');
     const isLoading = ref(true);
+    const id = ref(route.params.id);
+
+    watch(
+      () => id.value,
+      () => console.log(id.value)
+    );
 
     const getProducts = async () => {
       try {
-        u.value = await axios.get(
-          'https://shop.3dassociates.pk/wp-json/wc/store/products'
-        );
+        u.value = await ApiService.get('products');
+        if (id.value) {
+          u.value = u.value.filter(
+            (product) => product.categories[0].name === id.value
+          );
+        }
       } catch (error) {
         console.log(error);
       }
@@ -121,10 +131,14 @@ export default {
     const nextPage = async (index) => {
       try {
         isLoading.value = true;
-        u.value = await axios.get(
-          `https://shop.3dassociates.pk/wp-json/wc/store/products?page=${index +
-            1}`
-        );
+        if (id.value) {
+          u.value = await ApiService.get('');
+        } else {
+          u.value = await axios.get(
+            `https://shop.3dassociates.pk/wp-json/wc/store/products?page=${index +
+              1}`
+          );
+        }
         isLoading.value = false;
       } catch (error) {
         console.log(error);
@@ -155,6 +169,7 @@ export default {
 
     onMounted(async () => {
       try {
+        console.log(route.params.id);
         isLoading.value = true;
         await getProducts();
         isLoading.value = false;

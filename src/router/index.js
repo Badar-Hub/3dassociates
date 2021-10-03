@@ -13,12 +13,25 @@ const routes = [
     component: () => import('../views/About.vue'),
   },
   {
-    path: '/shop/products',
-    name: 'Products',
+    path: '/shop',
+    name: 'Shop',
     component: () => import('../components/General/ShopPage.vue'),
     meta: {
       heading: 'Products',
     },
+    redirect: { name: 'Products' },
+    children: [
+      {
+        path: '/shop/products/:id',
+        name: 'Product',
+        component: () => import('../views/Products.vue'),
+      },
+      {
+        path: '/shop/products',
+        name: 'Products',
+        component: () => import('../components/General/ShopPage.vue'),
+      },
+    ],
   },
   {
     path: '/new-product',

@@ -46,21 +46,48 @@
     </div>
     <div class="nav">
       <div class="row justify-center max-width">
-        <router-link to="/about">
-          <h6 class="q-my-sm">About Us</h6>
-        </router-link>
+        <q-btn unelevated flat size="18px" to="/about" label="About Us" />
         <h6 class="q-my-auto">|</h6>
-        <router-link to="/shop/products">
-          <h6 class="q-my-sm">Products</h6>
-        </router-link>
+        <q-btn
+          unelevated
+          flat
+          size="18px"
+          to="/shop/products"
+          label="Products"
+        />
         <h6 class="q-my-auto">|</h6>
-        <router-link to="/school-supplies">
-          <h6 class="q-my-sm">School Supplies</h6>
-        </router-link>
+        <q-btn-dropdown size="18px" unelevated flat label="Brands">
+          <q-list>
+            <q-item
+              v-for="(category, index) in categories"
+              :key="index"
+              clickable
+              :to="`/shop/products/${category.name}`"
+              v-close-popup
+              @click="onItemClick"
+            >
+              <q-item-section>
+                <q-item-label>{{ category.name }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
         <h6 class="q-my-auto">|</h6>
-        <router-link to="/office-supplies">
-          <h6 class="q-my-sm">Office Supplies</h6>
-        </router-link>
+        <q-btn
+          unelevated
+          flat
+          size="18px"
+          to="/school-supplies"
+          label="School Supplies"
+        />
+        <h6 class="q-my-auto">|</h6>
+        <q-btn
+          unelevated
+          flat
+          size="18px"
+          to="/office-supplies"
+          label="Office Supplies"
+        />
       </div>
     </div>
     <ModalComonent
@@ -106,7 +133,8 @@
 <script>
 import { onMounted, ref, watch } from 'vue';
 import ModalComonent from '../Layout/Modal.vue';
-import axios from 'axios';
+import { ApiService } from '../../services/ApiService';
+
 export default {
   components: {
     ModalComonent,
@@ -115,13 +143,23 @@ export default {
     const searched = ref('');
     const isSearchModal = ref(false);
     const filteredProducts = ref([]);
+    const isLoading = ref(true);
     const products = ref([]);
+    const categories = ref([]);
 
     const getProducts = async () => {
       try {
-        products.value = await await axios.get(
-          `https://shop.3dassociates.pk/wp-json/wc/store/products`
-        );
+        isLoading.value = true;
+        products.value = await await ApiService.get(`products`);
+        isLoading.value = false;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCategories = async () => {
+      try {
+        categories.value = await ApiService.get('products/categories');
       } catch (error) {
         console.log(error);
       }
@@ -153,13 +191,18 @@ export default {
       searchedProducts();
     };
 
-    onMounted(() => {
-      console.log(products.value);
+    onMounted(async () => {
+      try {
+        await getCategories();
+      } catch (error) {
+        console.log(error);
+      }
     });
     return {
       submit,
       searched,
       resetModal,
+      categories,
       isSearchModal,
       searchedProducts,
       filteredProducts,
