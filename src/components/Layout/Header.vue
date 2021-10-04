@@ -62,7 +62,7 @@
               v-for="(category, index) in categories"
               :key="index"
               clickable
-              :to="`/shop/products/${category.name}`"
+              :to="`/shop/products/${category.id}`"
               v-close-popup
               @click="onItemClick"
             >

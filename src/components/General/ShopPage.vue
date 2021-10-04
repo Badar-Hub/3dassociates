@@ -47,7 +47,8 @@
           </div>
           <div class="col-sm-6 q-my-auto text-right">
             <h6 class="q-my-sm">
-              Showing all 25 Items
+              Showing all
+              {{ selectedCategory.count }} Items
             </h6>
           </div>
         </div>
@@ -76,7 +77,7 @@
           <div class="row justify-center max-width">
             <q-btn
               class="q-mx-xs q-my-sm"
-              v-for="(page, index) in 3"
+              v-for="(page, index) in selectedCategory.count"
               :key="index"
               size="sm"
               @click="nextPage(index)"
@@ -108,31 +109,39 @@ export default {
     const headingTitle = route.meta.heading;
     const sortBy = ref('');
     const isLoading = ref(true);
-    const id = ref(route.params.id);
-
-    watch(
-      () => id.value,
-      () => console.log(id.value)
-    );
+    const selectedCategory = ref();
+    // const id = ref(route.params.id);
 
     const getProducts = async () => {
       try {
+        isLoading.value = true;
         u.value = await ApiService.get('products');
-        if (id.value) {
-          u.value = u.value.filter(
-            (product) => product.categories[0].name === id.value
+        console.log(u.value);
+        if (route.params.id) {
+          u.value = await ApiService.get(
+            `products?category=${route.params.id}`
           );
+          isLoading.value = false;
+        } else {
+          isLoading.value = false;
         }
       } catch (error) {
         console.log(error);
       }
     };
 
+    watch(
+      () => route.params.id,
+      () => getProducts()
+    );
+
     const nextPage = async (index) => {
       try {
         isLoading.value = true;
-        if (id.value) {
-          u.value = await ApiService.get('');
+        if (route.params.id) {
+          u.value = await ApiService.get(
+            `products?category=${route.params.id}&page=${index + 1}`
+          );
         } else {
           u.value = await axios.get(
             `https://shop.3dassociates.pk/wp-json/wc/store/products?page=${index +
@@ -148,7 +157,7 @@ export default {
     const sort = async () => {
       await getProducts();
       if (sortBy.value === 'Name: A to Z') {
-        u.value.data.sort((a, b) => {
+        u.value.sort((a, b) => {
           const productA = a.name.toUpperCase();
           const productB = b.name.toUpperCase();
           if (productA < productB) {
@@ -156,9 +165,27 @@ export default {
           }
         });
       } else if (sortBy.value === 'Price: Low To High') {
-        u.value.data.sort((a, b) => a.prices.price - b.prices.price);
+        u.value.sort((a, b) => a.prices.price - b.prices.price);
       } else if (sortBy.value === 'Price: High To Low') {
-        u.value.products.sort((a, b) => b.prices.price - a.prices.price);
+        u.value.sort((a, b) => b.prices.price - a.prices.price);
+      }
+    };
+
+    const selectedCategoryById = async () => {
+      try {
+        if (route.params.id) {
+          const categories = await ApiService.get('products/categories');
+          selectedCategory.value = categories.find(
+            (x) => x.id === +route.params.id
+          );
+          selectedCategory.value.count = Math.round(
+            selectedCategory.value.count / 10
+          );
+        } else {
+          selectedCategory.value.count = 4;
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -169,10 +196,8 @@ export default {
 
     onMounted(async () => {
       try {
-        console.log(route.params.id);
-        isLoading.value = true;
         await getProducts();
-        isLoading.value = false;
+        await selectedCategoryById();
       } catch (error) {
         console.log(error);
       }
@@ -184,6 +209,7 @@ export default {
       nextPage,
       isLoading,
       headingTitle,
+      selectedCategory,
     };
   },
 };
