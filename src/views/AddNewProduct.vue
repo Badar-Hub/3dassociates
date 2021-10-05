@@ -86,7 +86,7 @@ export default {
 
     const resetForm = () => {
       newProduct.value.name = '';
-      (newProduct.value.type = ''), (newProduct.value.regular_price = '');
+      newProduct.value.type = ''; newProduct.value.regular_price = '';
       newProduct.value.description = [];
       newProduct.value.categories = [];
       newProduct.value.images = [];
