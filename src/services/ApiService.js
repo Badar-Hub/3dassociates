@@ -4,8 +4,8 @@ export class ApiService {
   static axios = _axios.create({
     baseURL: 'https://shop.3dassociates.pk/wp-json/wc/v3/',
     params: {
-      consumer_key: 'ck_eae55b428917649345f163ae70a490f4da5cd090',
-      consumer_secret: 'cs_48280fa37373391243dbaf5faae25ac799afaa28',
+      consumer_key: 'ck_0de8c7c5eeebfffdbfed0778d1a3aab8811f8fc8',
+      consumer_secret: 'cs_236a7298804877b0ea2da8d36191eba7723b63f9',
     },
   });
 

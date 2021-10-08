@@ -54,13 +54,7 @@
         </div>
         <div class="products full-width">
           <div v-for="(product, index) in u" :key="index">
-            <a
-              :href="
-                `https://shop.3dassociates.pk/product/${
-                  product.permalink.split('https://3dassociates.pk/product/')[1]
-                }`
-              "
-            >
+            <a :href="product.permalink">
               <CardComponent
                 :height="350"
                 :externalImage="true"
