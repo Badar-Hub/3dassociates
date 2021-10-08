@@ -103,7 +103,9 @@ export default {
     const headingTitle = route.meta.heading;
     const sortBy = ref('');
     const isLoading = ref(true);
-    const selectedCategory = ref();
+    const selectedCategory = ref({
+      count: 25
+    });
     // const id = ref(route.params.id);
 
     const getProducts = async () => {
